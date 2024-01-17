@@ -1,0 +1,31 @@
+<div style='text-align:center;'>
+</div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <h1>Check out the Blinkist app</h1>
+
+    <img
+      width="300"
+      src="https://uploads.codesandbox.io/uploads/user/28642d08-0485-4170-b109-b2d0d77a5a3a/P5ST-hero_image.jpg"
+      alt="Check out the Blinkist app"
+    />
+
+    <div>
+      <%# <%= @ab_test == 'control' ? "Meet the app that revolutionized reading." : "Meet the app that has 18 million users." %>
+      <%= ab_test(:sign_up) %>
+    </div>
+
+    <div>
+      Thanks a lot for reading the article! <%= link_to("SIGN UP", :signup) %> for
+      Blinkist.
+    </div>
+
+    <script src="src/index.js"></script>
+  </body>
+</html>
