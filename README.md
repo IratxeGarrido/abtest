@@ -13,8 +13,6 @@ experiments for the ab testing and redis to store the data. The analytics-api I 
 
 bundle install
 
-rails db:create
-
 rails s
 
 ```
