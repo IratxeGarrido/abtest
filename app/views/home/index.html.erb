@@ -1,5 +1,3 @@
-<div style='text-align:center;'>
-</div>
 <!DOCTYPE html>
 <html>
   <head>
@@ -16,16 +14,17 @@
       alt="Check out the Blinkist app"
     />
 
-    <div>
-      <%# <%= @ab_test == 'control' ? "Meet the app that revolutionized reading." : "Meet the app that has 18 million users." %>
-      <%= ab_test(:sign_up) %>
+    <div data-controller="analytics-api">
+      <div data-analytics-api-target="text">
+        <%= @sign_up_test%>
+      </div>
+        <div>
+          Thanks a lot for reading the article! <%= link_to "SIGN UP", :signup,
+          data: {analytics_api_target: "link",
+          action:"click->analytics-api#fire"} %> for
+          Blinkist.
+        </div>
     </div>
 
-    <div>
-      Thanks a lot for reading the article! <%= link_to("SIGN UP", :signup) %> for
-      Blinkist.
-    </div>
-
-    <script src="src/index.js"></script>
   </body>
 </html>
