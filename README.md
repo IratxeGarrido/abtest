@@ -1,7 +1,7 @@
 
 # AB Testing challenge
 
-## TLDR
+## TL;DR:
 
 I created a rails clone of the sandbox and used the [split gem](https://github.com/splitrb/split) to generate the
 
@@ -10,13 +10,8 @@ experiments for the ab testing and redis to store the data. The analytics-api I 
 ## Setup
 
 ```
-
 bundle install
-
-rails db:create
-
 rails s
-
 ```
 
 You can see the running app at `localhost:3000` and the experiments results at `localhost:3000/split`
@@ -25,11 +20,8 @@ You can see the running app at `localhost:3000` and the experiments results at `
 
 ## Description
 
-Since the team's tech stack is Ruby on Rails I decided to create a clone of the given challenge in rails. Then I decided to
-
-google for a gem that does would allow me to do AB testing. I used split because it seems to be maintained (last release was in November 2023),
-
-it has a dashboard were users see the results of the experiments and non-technical staff could easily create new experiments there or directly in the code in `split.rb`.
+Since the team's tech stack is Ruby on Rails I decided to create a clone of the given challenge in rails. Then I decided to google for a gem that would allow me to do AB testing. I used split because it seems to be maintained (last release was in November 2023), it has a dashboard were users see the results of the experiments and non-technical staff could easily create new experiments there or directly in the code in [`split.rb`](config/initializers/split.rb).
+Non technical staff can add experiments in a JSON like format in `split.rb`, and modify the `index.html.erb` using their HTML skills.
 
 
 ### Acceptance criteria
@@ -60,16 +52,14 @@ I created a stimulus controller `analytics_api_controller.js` to takes care of t
 I created a function called `fire()` that will be called on a click event. So every time the user clicks on the button the `trackEvent` function will be called and print the URL, the text shown and the user session.
 
 **5.Every single page view and click shall be tracked.**
-This is done in the `analytics_api_controller.js`
+This is done in the `analytics_api_controller.js` via the `connect()` function
 
 **6.We want to determine a winning variation by comparing the CTR (click-through rate) of clicks on the “Sign up” button. The CTR of a page is "number of clicks" divided by "number of page views". As a user can only effectively convert aka signup once, the counts for the CTR computation need to be unique per user. So a single user clicking ten times and reloading the page 5 times should still be only counted as one converted user. Make sure this is possible with the data you send and explain on a high level how.**
-The data I would send would be something similar to what is in the split dashboard:
+This could be done with the information sent, when a unique User ID is attached to every event sent to the analytics API. Since the `PageView` event is sent for every page load, this gives you the "number of page views". And the "number of clicks" is tracked via the `Click` event in the SIGN UP button.
+
+You can also use the data from the split dashboard to calculate the CTR:
 - The number of participants
 - The number participants that didn't finished the experiment (didn't click on the button)
 - The number participants that completed the experiment (did click on the button)
 With this data you can calculate the CTR = non-finished / completed
 Split already takes into account if a user click 5 times and/or refreshes 10 times as one converted user
-
-You could also do this by sending session ID and the number of page views that
-every variant has and the see if the SIGN UP button has been clicked by checking if
-there is an event named SIGN UP

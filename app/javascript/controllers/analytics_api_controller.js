@@ -4,7 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["link", "text"]
   connect() {
-    this.trackPageview(window.location.href, this.textTarget.innerText)
+    this.trackPageview(window.location.href, this.textTarget.innerText, 'PageView')
   }
 
   fire() {
@@ -15,12 +15,13 @@ export default class extends Controller {
  * Send as params whatever you might seem valuable to send.
  * The URL is probably a good start though.
  */
-trackPageview = (url, text) => {
+trackPageview = (url, text, eventName, userId) => {
+  // Create a JSON object, that would be transferred to the backend
   console.log(`--> Tracking Pageview:
   URL: ${url}
   Text: ${text}
-  Page View Counter
-  Session ID / UserID`);
+  Event Name: ${eventName}
+  User ID: ${userId}`);
 };
 
 /**
@@ -28,12 +29,12 @@ trackPageview = (url, text) => {
  * Send as params whatever you might seem valuable to send.
  * The URL and an event name are probably a good start though.
  */
-trackEvent = (url, eventName, text) => {
+trackEvent = (url, eventName, text, userId) => {
   console.log(`--> Tracking Event:
   URL: ${url}
   Text: ${text}
   Event Name: ${eventName}
-  Session ID / UserID`);
+  User ID: ${userId}`);
 };
 
 }
