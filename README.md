@@ -27,6 +27,7 @@ Non technical staff can add experiments in a JSON like format in `split.rb`, and
 ### Acceptance criteria
 
 **1. Visitor sees only one variation (assigned randomly) when they land on the page.**
+
 In `split.rb` I created the experiment `sign_up` with the two texts given:
 ```
 sign_up: {
@@ -43,18 +44,23 @@ In the `home_controller` there are two functions:
 In the view `index.html.erb` I render `@sign_up_test` so the user can see the text.
 
 **2. The assigned variation doesn’t change after the page reloads.**
+
 This is a standard behaviour of split.
 
 **3.Track a pageview via the `analytics-api.js` method when a visitor lands on the page.**
+
 I created a stimulus controller `analytics_api_controller.js` to takes care of this. I defined a pageview as a get request, so every time the user reloads the `connect()` function of the controller will call `trackPageview()` and print the URL, the text that was shown and user session.
 
-**4.Track an event via the `analytics-api.js` method when a visitor clicks on the “Sign up” button.**
+**4. Track an event via the `analytics-api.js` method when a visitor clicks on the “Sign up” button.**
+
 I created a function called `fire()` that will be called on a click event. So every time the user clicks on the button the `trackEvent` function will be called and print the URL, the text shown and the user session.
 
-**5.Every single page view and click shall be tracked.**
+**5. Every single page view and click shall be tracked.**
+
 This is done in the `analytics_api_controller.js` via the `connect()` function
 
-**6.We want to determine a winning variation by comparing the CTR (click-through rate) of clicks on the “Sign up” button. The CTR of a page is "number of clicks" divided by "number of page views". As a user can only effectively convert aka signup once, the counts for the CTR computation need to be unique per user. So a single user clicking ten times and reloading the page 5 times should still be only counted as one converted user. Make sure this is possible with the data you send and explain on a high level how.**
+**6. We want to determine a winning variation by comparing the CTR (click-through rate) of clicks on the “Sign up” button. The CTR of a page is "number of clicks" divided by "number of page views". As a user can only effectively convert aka signup once, the counts for the CTR computation need to be unique per user. So a single user clicking ten times and reloading the page 5 times should still be only counted as one converted user. Make sure this is possible with the data you send and explain on a high level how.**
+
 This could be done with the information sent, when a unique User ID is attached to every event sent to the analytics API. Since the `PageView` event is sent for every page load, this gives you the "number of page views". And the "number of clicks" is tracked via the `Click` event in the SIGN UP button.
 
 You can also use the data from the split dashboard to calculate the CTR:
